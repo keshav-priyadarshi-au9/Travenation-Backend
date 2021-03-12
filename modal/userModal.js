@@ -7,6 +7,6 @@ const userSchema = new mongoose.Schema({
     role:String
 })
 
-mongoose.model('user', userSchema); //here user is the name of database collection
+mongoose.model('users', userSchema); //here user is the name of database collection
 
-module.exports=mongoose.model('user')
+module.exports=mongoose.model('users')

@@ -25,9 +25,15 @@ router.post('/register',(req,res)=>{
         password:hashPassword,
         role:req.body.role?req.body.role:'user'
     }
-    User.create(userData,(err,data)=>{
-        if(err) res.status(500).send("Error while registering");
-        res.status(200).send("Register Success")
+    User.findOne({email:userData.email},(err,data)=>{
+        if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
+        if(data) return res.send({auth:false, error:"email already in use"})
+        if(!data){
+            User.create(userData, async(err,data)=>{
+                if(err) if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
+                await res.status(200).send({auth:true, success:"Register Successful"})
+            })
+        }
     })
 })
 

@@ -44,8 +44,8 @@ router.post('/generate_booking',(req,res)=>{
         if(err) return res.send({auth:false, token:"Invalid token"})
         
         booking.create(bookingData,(err,data)=>{
-            if(err) throw err
-            res.send({auth:true, success:"Booking Success"})
+            if(err) return res.status(500).send({auth:false,"error":"Something went wrong ! Please try again."})
+            res.send({auth:true, success:"Booking Successfull"})
         })
     })
 })
@@ -55,10 +55,10 @@ router.post('/accept_booking',(req,res)=>{
     let id = req.body._id
    
     booking.find({_id:id},(err,data)=>{
-        if(err) throw err
+        if(err) return res.status(500).send({auth:false,"error":"Something went wrong ! Please try again."})
         if(data){
             booking.updateOne({_id:id},{status:"Confirm"},(err,data)=>{
-                if(err) {return res.status(500).send("action failed")}
+                if(err) return res.status(500).send({auth:false,"error":"Action failed ! Please try again."})
                 res.send({auth:true, success:"Booking has been approved"})
             })
         }
@@ -70,10 +70,10 @@ router.post('/reject_booking',(req,res)=>{
     let id = req.body._id
    
     booking.find({_id:id},(err,data)=>{
-        if(err) throw err
+        if(err) return res.status(500).send({auth:false,"error":"Something went wrong ! Please try again."})
         if(data){
             booking.updateOne({_id:id},{status:"Rejected"},(err,data)=>{
-                if(err) {return res.status(500).send("action failed")}
+                if(err) return res.status(500).send({auth:false,"error":"Action failed ! Please try again."})
                 res.send({auth:true, success:"Booking has been rejected"})
             })
         }

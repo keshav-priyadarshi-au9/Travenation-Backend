@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const db = require("./db")
-const port = 2400;
+const port = process.env.PORT || 2400;
 
 const cors = require("cors")
 app.use(cors())
@@ -13,7 +13,7 @@ const bookings = require('./controller/bookings')
 app.use('/bookings', bookings)
 
 app.get("/",(req,res)=>{
-    res.send("we will learn JWT")
+    res.send({title: "Welcome to Travenation",message:"Here we will have users data and hotels bookings data"})
 })
 
 app.listen(port, ()=>{
