@@ -13,7 +13,7 @@ const sessionId = uuid.v4();  // A unique identifier for the given session
 
 router.post('/',(req,res)=>{
 
-    console.log(req.body)
+    // console.log(req.body)
 
     runSample(req.body.userReply).then(data=>{
 
@@ -23,6 +23,9 @@ router.post('/',(req,res)=>{
 
 })
 
+router.get('/',(req,res)=>{ 
+    res.send({message:"chatbot"})
+})
 
 
 /**
