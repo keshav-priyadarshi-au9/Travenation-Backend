@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
-const bodyParser = require("body-parser")
+
+const validator = require("email-validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const config = require("../config")
 const User = require("../modal/userModal")
 
-router.use(bodyParser.urlencoded({extended:true}));
-router.use(bodyParser.json())
+
 
 //get all user
 router.get('/users',(req,res)=>{
@@ -25,16 +25,26 @@ router.post('/register',(req,res)=>{
         password:hashPassword,
         role:req.body.role?req.body.role:'user'
     }
-    User.findOne({email:userData.email},(err,data)=>{
-        if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
-        if(data) return res.send({auth:false, error:"email already in use"})
-        if(!data){
-            User.create(userData, async(err,data)=>{
-                if(err) if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
-                await res.status(200).send({auth:true, success:"Register Successful"})
-            })
-        }
-    })
+    let validEmail = validator.validate(userData.email)
+    console.log(validEmail)
+
+    if(!validEmail){
+        return res.send({auth:false, error:"Email invalid, Try again"})
+    }
+    else{
+        User.findOne({email:userData.email},(err,data)=>{
+            if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
+            if(data) return res.send({auth:false, error:"Email already in use"})
+            if(!data){
+                User.create(userData, async(err,data)=>{
+                    if(err) if(err) return res.status(500).send({auth:false,"error":"Error while registering! Please try again."})
+                    await res.status(200).send({auth:true, success:"Register Successful"})
+                })
+            }
+        })
+    }
+
+
 })
 
 router.post('/login',(req,res)=>{

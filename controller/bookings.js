@@ -1,11 +1,9 @@
 const express = require("express")
 const router = express.Router()
-const bodyParser = require("body-parser")
 const jwt = require("jsonwebtoken")
 const config = require("../config")
 const booking = require("../modal/bookingModal")
 
-router.use(bodyParser.json())
 
 
 //see all bookings
