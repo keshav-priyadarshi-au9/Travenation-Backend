@@ -23,8 +23,8 @@ router.post('/',(req,res)=>{
 
 })
 
-router.get('/',(req,res)=>{ 
-    res.send({message:"chatbot"})
+router.get('/health',(req,res)=>{ 
+    res.send({message:"Health is Ok"})
 })
 
 
