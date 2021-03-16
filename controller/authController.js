@@ -4,7 +4,7 @@ const router = express.Router()
 const validator = require("email-validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const config = require("../config")
+const config = require("../config/config")
 const User = require("../modal/userModal")
 
 
@@ -77,9 +77,9 @@ router.get('/userInfo',(req,res)=>{
     })
 })
 
-router.put('/update_password',(req,res)=>{
-    const oldPassword = req.body.oldPassword
-    User.find({})
-})
+// router.put('/update_password',(req,res)=>{
+//     const oldPassword = req.body.oldPassword
+//     User.find({})
+// })
 
 module.exports=router;
