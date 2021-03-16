@@ -1,6 +1,9 @@
 const mongoose = require("mongoose")
+const config = require("./config/dbUrl")
+
+
+
 // const url = "mongodb://localhost:27017/travenation"
-const url = "mongodb+srv://kp_13:kuj166@cluster0.nckbm.mongodb.net/travenation?retryWrites=true&w=majority"
+const url = config.dburl
+
 mongoose.connect(url)
-
-
